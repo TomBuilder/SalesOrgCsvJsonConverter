@@ -25,9 +25,8 @@ for (var line = 1; line < csvLines.Length; line++)
 
    root ??= new Root
    {
-      salesorg = "##SalesOrg##",
-      type = values[2],
-      volumes = new List<Volume>()
+      SalesOrg = "##SalesOrg##",
+      Type = values[2]
    };
 
    var year = Convert.ToInt32(values[3][(values[3].LastIndexOf('/') + 1)..]);
@@ -40,27 +39,26 @@ for (var line = 1; line < csvLines.Length; line++)
       { // week is in next year
          continue;
       }
-      var volume = root.volumes.FirstOrDefault(v => v.startdate == startDate);
+      var volume = root.Volumes.FirstOrDefault(v => v.StartDate == startDate);
 
       if (volume == null)
       {
          volume = new Volume
          {
-            startdate = startDate,
-            rows = new List<Row>()
+            StartDate = startDate
          };
-         root.volumes.Add(volume);
+         root.Volumes.Add(volume);
       }
       var row = new Row
       {
-         prd = productId,
-         acc = accountId,
-         value = Convert.ToDouble(values[i + 4], CultureInfo.InvariantCulture)
+         Prd = productId,
+         Acc = accountId,
+         Value = Convert.ToDouble(values[i + 4], CultureInfo.InvariantCulture)
       };
-      volume.rows.Add(row);
+      volume.Rows.Add(row);
    }
 
-   root.volumes = root.volumes.OrderBy(v => v.startdate).ToList();
+   root.Volumes = root.Volumes.OrderBy(v => v.StartDate).ToList();
 }
 
 var options = new JsonSerializerOptions
@@ -101,21 +99,22 @@ static DateTime FirstDateOfWeekISO8601(int year, int weekOfYear)
 
 public class Row
 {
-   public string prd { get; set; }
-   public string acc { get; set; }
-   public double value { get; set; }
+   public string? Prd { get; set; }
+   public string? Acc { get; set; }
+   public double Value { get; set; }
 }
 
 public class Volume
 {
-   public string startdate { get; set; }
-   public List<Row> rows { get; set; }
+   public string? StartDate { get; set; }
+   public List<Row> Rows { get; set; } = new();
+
 }
 
 public class Root
 {
-   public string type { get; set; }
-   public string salesorg { get; set; }
-   public List<Volume> volumes { get; set; }
+   public string? Type { get; set; }
+   public string? SalesOrg { get; set; }
+   public List<Volume> Volumes { get; set; } = new();
 }
 
