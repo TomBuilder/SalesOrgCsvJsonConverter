@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "TvolCsvJsonConverter": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\thoma\\Downloads\\Simon\\input.csv C:\\Users\\thoma\\Downloads\\Simon\\myOutput.json"
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "environmentVariables": {},
+      "distributionName": ""
+    }
+  }
+}
